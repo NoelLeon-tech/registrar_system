@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <title>Queue</title>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+    }
+
+    h1 {
+      font-size: 50px;
+      margin-block: 16px;
+    }
+
+  </style>
+
+</head>
+<body>
+  <h1>Queue List</h1>
+  <ul 
+    class="list-group"
+    style=" height: 540px; display: flex; flex-direction: column; flex-wrap: wrap; gap: 8px;"
+  >
+    {% if queues %} 
+      {% for queue in queues %}
+        <li 
+          style="width: 326px; display: flex; align-items: center; gap: 16px" 
+          class="list-group-item rounded queue"
+          data-status="{{ queue.status }}"
+        >
+            <span style="font-size: 48px;"> {{ queue.number }} </span>
+          {% if forloop.first %}
+            <span style="font-size: 24px;">Processing...</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+      
+    {% else %}
+      <li>No queues available.</li>
+    {% endif %}
+      
+  </ul>
+
+  <script>
+    setTimeout(function() {
+      location.reload();
+    }, 80000);
+
+    let queues = document.querySelectorAll(".queue")
+
+    for (queue of queues) {
+      if (queue.dataset.status === "Processing") {
+        queue.classList.add("active")
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
